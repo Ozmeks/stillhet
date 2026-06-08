@@ -2,7 +2,7 @@
 
 <template>
   <header>
-    <img alt="Vue logo" src="./assets/logo.svg" width="125" height="125" />
+    <h1>Vue 3 + TypeScript + Vite</h1>
   </header>
 </template>
 
