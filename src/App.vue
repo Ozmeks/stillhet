@@ -1,9 +1,30 @@
-<script setup lang="ts"></script>
-
 <template>
-  <header>
-    <h1>Vue 3 + TypeScript + Vite</h1>
-  </header>
+  <div class="card-grid">
+    <MeditationCard
+      v-for="meditation in store.meditations"
+      :key="meditation.id"
+      :meditation="meditation"
+    />
+  </div>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import { useMeditationsStore } from '@/stores/meditations.store';
+import { onMounted } from 'vue';
+import MeditationCard from './components/MeditationCard.vue';
+
+const store = useMeditationsStore();
+
+onMounted(() => {
+  store.fetchMeditations();
+});
+</script>
+
+<style scoped>
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+</style>
