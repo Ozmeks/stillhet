@@ -4,6 +4,7 @@
   --color-fg: #ffffff;
   --color-bg-card: #f7f3f0;
   --color-fg-card: #000;
+  --color-btn-active: #69b09c;
 }
 
 *,
@@ -19,7 +20,7 @@ body {
   color: var(--color-fg);
   background: var(--color-bg);
   line-height: 1.6;
-  font-family: Roboto, sans-serif;
+  font-family: "Alegreya", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
