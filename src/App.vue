@@ -1,10 +1,15 @@
 <template>
-  <div class="card-grid">
-    <MeditationCard
-      v-for="meditation in store.meditations"
-      :key="meditation.id"
-      :meditation="meditation"
-    />
+  <div class="app">
+    <nav class="nav">
+      <ProfileAvatar :name="name" />
+    </nav>
+    <div class="card-grid">
+      <MeditationCard
+        v-for="meditation in store.meditations"
+        :key="meditation.id"
+        :meditation="meditation"
+      />
+    </div>
   </div>
 </template>
 
@@ -12,12 +17,15 @@
 import { useMeditationsStore } from '@/stores/meditations.store';
 import { onMounted } from 'vue';
 import MeditationCard from './components/MeditationCard.vue';
+import ProfileAvatar from './components/ProfileAvatar.vue';
 
 const store = useMeditationsStore();
 
 onMounted(() => {
   store.fetchMeditations();
 });
+
+const name = 'Наталья';
 </script>
 
 <style scoped>
@@ -26,5 +34,12 @@ onMounted(() => {
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 20px;
   width: 100%;
+}
+.app {
+  display: flex;
+  margin-top: 150px;
+}
+.nav {
+  min-width: 500px;
 }
 </style>
