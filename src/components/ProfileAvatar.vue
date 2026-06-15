@@ -78,6 +78,7 @@ const moods = [
   display: flex;
   flex-direction: column;
   font-size: 18px;
+  margin-top: 2rem;
   margin-left: 2rem;
   min-width: 500px;
 }
