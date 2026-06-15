@@ -35,6 +35,5 @@ const name = 'Наталья';
 }
 .home {
   display: flex;
-  margin-top: 150px;
 }
 </style>
