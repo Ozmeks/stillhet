@@ -79,6 +79,7 @@ const moods = [
   flex-direction: column;
   font-size: 18px;
   margin-left: 2rem;
+  min-width: 500px;
 }
 .profile-avatar__image {
   width: 130px;
