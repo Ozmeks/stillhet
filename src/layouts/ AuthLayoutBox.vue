@@ -1,5 +1,18 @@
-@import './base.css';
+<template>
+  <div class="auth-container">
+    <slot></slot>
+  </div>
+</template>
 
+<script lang="ts" setup>
+import { ref } from 'vue';
+import InputString from '@/components/InputString.vue';
+
+const userName = ref('');
+const userPassword = ref('');
+</script>
+
+<style scoped>
 .auth-container {
   width: 100vw;
   height: 100vh;
@@ -14,3 +27,4 @@
   justify-content: center;
   align-items: center;
 }
+</style>
