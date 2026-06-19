@@ -9,7 +9,7 @@ export const API_ROUTES = {
   stats: '/stats',
   auth: {
     login: 'auth/login',
-    registration: 'auth/register',
+    register: 'auth/register',
   }
 };
 

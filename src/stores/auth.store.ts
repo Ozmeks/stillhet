@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function register(username: string, email: string, password: string) {
     try {
-      const response = await client().post<RegisterResponse>(API_ROUTES.auth.login, {
+      const response = await client().post<RegisterResponse>(API_ROUTES.auth.register, {
         username,
         email,
         password,
