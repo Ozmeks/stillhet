@@ -7,11 +7,12 @@ export const router = createRouter({
 		{
       path: '/login', name: 'login', component:  () => import('./views/LoginView.vue'),
     }, {
-      path: '/registration', name: 'registration', component:  () => import('./views/RegistrationView.vue'),
+      path: '/register', name: 'register', component:  () => import('./views/RegisterView.vue'),
 		}, 
     {
       path: '/',
       component: () => import('@/layouts/MainLayout.vue'),
+      redirect: '/dashboard',
       children: [
         {
           path: 'dashboard', name: 'dashboard', component: () => import('@/views/DashboardView.vue'),
@@ -25,7 +26,7 @@ export const router = createRouter({
 
 router.beforeEach((to) => {
 	const authStore = useAuthStore();
-	if (!authStore.token && to.name !== 'login' && to.name !== 'registration') {
+	if (!authStore.token && to.name !== 'login' && to.name !== 'register') {
 		return { name: 'login' }
 	}
 });
