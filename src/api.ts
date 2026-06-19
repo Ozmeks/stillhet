@@ -6,6 +6,7 @@ const API_BASE_URL = 'http://localhost:3000/api/';
 export const API_ROUTES = {
   meditations: '/meditations',
   profile: '/profile',
+  stats: '/stats',
   auth: {
     login: 'auth/login',
     registration: 'auth/register',

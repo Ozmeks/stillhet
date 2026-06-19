@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <ProfileAvatar :name="userName" />
+    <UserProfile :name="userName" />
     <div class="card-grid">
       <MeditationCard
         v-for="meditation in store.meditations"
@@ -17,7 +17,7 @@ import { useMeditationsStore } from '@/stores/meditations.store';
 import { useProfileStore } from '@/stores/profile.store';
 import { onMounted } from 'vue';
 import MeditationCard from '@/components/MeditationCard.vue';
-import ProfileAvatar from '@/components/ProfileAvatar.vue';
+import UserProfile from '@/components/UserProfile.vue';
 
 const store = useMeditationsStore();
 const profileStore = useProfileStore();
