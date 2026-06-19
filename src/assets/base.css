@@ -2,9 +2,11 @@
 :root {
   --color-bg: #253334;
   --color-fg: #ffffff;
+  --color-fg-inactive: #BEC2C2;
   --color-bg-card: #f7f3f0;
   --color-fg-card: #000;
   --color-btn-active: #69b09c;
+  --color-btn-login: #7C9A92;
 }
 
 *,

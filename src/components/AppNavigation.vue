@@ -37,7 +37,7 @@
     </svg>
 
     <div class="app-navigation__links">
-      <RouterLink class="app-navigation__link" :to="{ name: 'home' }">
+      <RouterLink class="app-navigation__link" :to="{ name: 'dashboard' }">
         <svg
           width="24"
           height="24"
@@ -53,7 +53,7 @@
         </svg>
         Медитация
       </RouterLink>
-      <RouterLink class="app-navigation__link" :to="{ name: 'statistics' }">
+      <RouterLink class="app-navigation__link" :to="{ name: 'stats' }">
         <svg
           width="24"
           height="24"
