@@ -1,4 +1,4 @@
-export interface FeelingType {
+interface FeelingType {
   id: string;
   label: string;
   svg: string;
