@@ -33,13 +33,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
-  width: 100%;
-}
 .home {
   display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 60px;
+}
+.card-grid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 800px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

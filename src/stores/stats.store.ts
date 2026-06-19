@@ -4,11 +4,11 @@ import { defineStore } from 'pinia';
 
 export const useStatsStore = defineStore('stats', () => {
 
-  async function setStats(type: string) {
+  async function setStats(type: string, value: number = 1) {
     try {
       await client().post<StatsResponse>(API_ROUTES.stats, {
-        type: type,
-        value: 1,
+        type,
+        value,
       });
     } catch (error) {
       console.error('Ошибка при отправке статистики:', error);

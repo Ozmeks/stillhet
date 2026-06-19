@@ -18,6 +18,11 @@ export const router = createRouter({
           path: 'dashboard', name: 'dashboard', component: () => import('@/views/DashboardView.vue'),
         }, {
           path: 'stats', name: 'stats', component: () => import('@/views/StatsView.vue'),
+        },
+        {
+          path: 'meditation/:id', 
+          name: 'meditation-session', 
+          component: () => import('@/views/MeditationSessionView.vue'),
         }
       ]
     },
