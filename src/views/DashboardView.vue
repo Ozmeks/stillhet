@@ -26,9 +26,9 @@ const userName = computed(() => {
   return profileStore.profile?.username || 'Пользователь';
 });
 
-onMounted(() => {
-  store.fetchMeditations();
-  profileStore.fetchProfile();
+onMounted(async () => {
+  await store.fetchMeditations();
+  await profileStore.fetchProfile();
 });
 </script>
 
