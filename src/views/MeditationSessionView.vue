@@ -1,22 +1,27 @@
 <template>
   <div class="meditation">
-    <div class="timer-wrapper">
-      <TimerIcon />
-      <div class="timer-text">{{ formattedTime }}</div>
-    </div>
-    <h2 class="meditation-title">{{ currentMeditation?.title }}</h2>
-    <p class="meditation-description">{{ currentMeditation?.description }}</p>
-    <div class="button-groups">
-      <TimerStopIcon class="timer-btn" @click="stopTimer" />
-      <TimerPauseIcon v-if="isTimerStarted" class="timer-btn" @click="pauseTimer" />
-      <TimerPlayIcon v-else class="timer-btn" @click="startTimer" />
-      <TimerRepeatIcon class="timer-btn" @click="repeatTimer" />
-    </div>
+    <p v-if="isLoading">Загружаем медитацию...</p>
+    <p v-else-if="loadError">{{ loadError }}</p>
+    <p v-else-if="!currentMeditation">Медитация не найдена.</p>
+    <template v-else>
+      <div class="timer-wrapper">
+        <TimerIcon />
+        <div class="timer-text">{{ formattedTime }}</div>
+      </div>
+      <h2 class="meditation-title">{{ currentMeditation.title }}</h2>
+      <p class="meditation-description">{{ currentMeditation.description }}</p>
+      <div class="button-groups">
+        <TimerStopIcon class="timer-btn" @click="stopTimer" />
+        <TimerPauseIcon v-if="isTimerStarted" class="timer-btn" @click="pauseTimer" />
+        <TimerPlayIcon v-else class="timer-btn" @click="startTimer" />
+        <TimerRepeatIcon class="timer-btn" @click="repeatTimer" />
+      </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onUnmounted, watchEffect } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue';
 
 import { useRoute, useRouter } from 'vue-router';
 import { useMeditationsStore } from '@/stores/meditations.store';
@@ -39,7 +44,22 @@ const currentMeditation = computed(() => {
 
 const timeLeft = ref(0);
 const isTimerStarted = ref(false);
+const isLoading = ref(true);
+const loadError = ref('');
 let timerId: ReturnType<typeof setInterval> | null = null;
+
+onMounted(async () => {
+  try {
+    if (!meditationsStore.hasFetched) {
+      await meditationsStore.fetchMeditations();
+    }
+  } catch (error) {
+    console.error('Не удалось загрузить медитации:', error);
+    loadError.value = 'Не удалось загрузить медитацию.';
+  } finally {
+    isLoading.value = false;
+  }
+});
 
 watchEffect(() => {
   if (currentMeditation.value) {

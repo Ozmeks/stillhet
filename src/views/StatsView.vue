@@ -1,6 +1,10 @@
 <template>
   <div class="stats-page">
-    <div class="stats-grid">
+    <p v-if="isLoading" class="stats-message" role="status">Загружаем статистику...</p>
+    <p v-else-if="loadError" class="stats-message stats-message--error" role="alert">
+      {{ loadError }}
+    </p>
+    <div v-else class="stats-grid">
       <StatsCard
         v-for="item in STATS_DATA_COLORS"
         :color-top="item.colorCardBg"
@@ -14,22 +18,28 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStatsStore } from '@/stores/stats.store';
 import StatsCard from '@/components/StatsCard.vue';
 import { STATS_DATA_COLORS } from '@/constants/statsDataColors';
 
 const statsStore = useStatsStore();
-const statsData = computed(() => statsStore.statsSummary);
+const isLoading = ref(true);
+const loadError = ref('');
 
-function getStatValue(id: string): number {
-  if (!statsData.value) return 0;
-
-  return statsData.value[id as keyof typeof statsData.value] || 0;
+function getStatValue(id: keyof NonNullable<typeof statsStore.statsSummary>): number {
+  return statsStore.statsSummary?.[id] ?? 0;
 }
 
 onMounted(async () => {
-  await statsStore.getStats();
+  try {
+    await statsStore.getStats();
+  } catch (error) {
+    console.error('Ошибка при получении статистики:', error);
+    loadError.value = 'Не удалось загрузить статистику. Попробуйте обновить страницу.';
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
 
@@ -38,16 +48,25 @@ onMounted(async () => {
   padding: 40px;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   box-sizing: border-box;
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 24px;
-
   max-width: 950px;
   width: 100%;
+}
+
+.stats-message {
+  margin: 0;
+  text-align: center;
+}
+
+.stats-message--error {
+  color: #b42318;
 }
 </style>

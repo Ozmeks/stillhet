@@ -35,7 +35,8 @@ defineProps<{
 <style scoped>
 .stats-card {
   position: relative;
-  width: 300px;
+  width: 100%;
+  min-width: 0;
   height: 200px;
   border-radius: 20px;
   overflow: hidden;
@@ -46,7 +47,6 @@ defineProps<{
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
 }
 .stats-card__content {
   position: absolute;
@@ -54,7 +54,6 @@ defineProps<{
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
 
   display: flex;
   flex-direction: column;
@@ -66,7 +65,6 @@ defineProps<{
   font-size: 80px;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 8px;
   margin: 0 0 0 auto;
 }
 .stats-card__title {

@@ -2,34 +2,60 @@
   <div class="home">
     <UserProfile :name="userName" />
     <div class="card-grid">
-      <MeditationCard
-        v-for="meditation in store.meditations"
-        :key="meditation.id"
-        :meditation="meditation"
-      />
+      <p v-if="isLoading" class="status" aria-live="polite">Загрузка…</p>
+
+      <div v-else-if="loadError" class="status status--error" role="alert">
+        <p>{{ loadError }}</p>
+        <button type="button" @click="loadData">Повторить</button>
+      </div>
+
+      <template v-else>
+        <MeditationCard
+          v-for="meditation in meditationsStore.meditations"
+          :key="meditation.id"
+          :meditation="meditation"
+        />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useMeditationsStore } from '@/stores/meditations.store';
 import { useProfileStore } from '@/stores/profile.store';
-import { onMounted } from 'vue';
 import MeditationCard from '@/components/MeditationCard.vue';
 import UserProfile from '@/components/UserProfile.vue';
 
-const store = useMeditationsStore();
+const meditationsStore = useMeditationsStore();
 const profileStore = useProfileStore();
 
-const userName = computed(() => {
-  return profileStore.profile?.username || 'Пользователь';
-});
+const isLoading = ref(true);
+const loadError = ref('');
 
-onMounted(async () => {
-  await store.fetchMeditations();
-  await profileStore.fetchProfile();
-});
+const userName = computed(() => profileStore.profile?.username || 'Пользователь');
+
+async function loadData() {
+  isLoading.value = true;
+  loadError.value = '';
+
+  const [meditationsResult, profileResult] = await Promise.allSettled([
+    meditationsStore.fetchMeditations(),
+    profileStore.fetchProfile(),
+  ]);
+
+  if (meditationsResult.status === 'rejected') {
+    console.error('Не удалось загрузить список медитаций:', meditationsResult.reason);
+    loadError.value = 'Не удалось загрузить медитации. Попробуйте ещё раз.';
+  }
+  if (profileResult.status === 'rejected') {
+    console.error('Не удалось загрузить профиль:', profileResult.reason);
+  }
+
+  isLoading.value = false;
+}
+
+onMounted(loadData);
 </script>
 
 <style scoped>
@@ -39,14 +65,19 @@ onMounted(async () => {
   box-sizing: border-box;
   padding-top: 60px;
 }
+.status {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+.status--error {
+  color: var(--color-error, #b42318);
+}
 .card-grid {
-  margin-top: 50px;
+  margin: 50px auto 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
   max-width: 800px;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>
