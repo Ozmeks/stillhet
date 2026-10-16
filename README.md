@@ -16,6 +16,12 @@ This project is built using a modern, scalable, and type-safe frontend stack:
 
 ## 🚀 Getting Started
 
+### Prerequisites
+
+This application requires a running backend service. You can download the pre-compiled backend binary along with the Insomnia API collection directly from the [GitHub Releases](https://github.com/Ozmeks/stillhet/releases) page. Please ensure the backend is running before launching the frontend.
+
+### Frontend Setup
+
 To run this project locally, clone the repository and install the dependencies:
 
 ```bash
@@ -31,3 +37,9 @@ npm install
 # Start the development server
 npm run dev
 ```
+
+### 🔑 Authentication
+
+After starting the development server, navigate to the login route to authenticate and access the application features:
+
+- **Login URL:** `http://localhost:5173/login`
